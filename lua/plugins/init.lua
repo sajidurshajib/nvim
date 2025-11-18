@@ -1,6 +1,6 @@
 require("lazy").setup({
   -- Theme
-  { "catppuccin/nvim", name = "catppuccin" },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000},
 
   -- Optional icons
   { "kyazdani42/nvim-web-devicons" },
@@ -17,31 +17,47 @@ require("lazy").setup({
 
   -- GitSigns
   { "lewis6991/gitsigns.nvim" },
+
 })
 
 
 -- Theme config
-vim.g.catppuccin_flavour = "mocha"
-vim.cmd([[colorscheme catppuccin]])
-vim.cmd([[
-  hi Normal guibg=NONE ctermbg=NONE
-  hi NvimTreeNormal guibg=NONE ctermbg=NONE
-  hi NvimTreeEndOfBuffer guibg=NONE ctermbg=NONE
-  hi NormalNC guibg=NONE
-  hi NvimTreeEndOfBuffer guibg=NONE ctermbg=NONE
-  hi VertSplit guibg=NONE
-  hi TelescopeNormal guibg=NONE
-  hi TelescopeBorder guibg=NONE
-  hi TelescopePromptNormal guibg=NONE
-]])
+require("catppuccin").setup({
+    flavour = "mocha",
+    transparent_background = true,
+    integrations = {
+        bufferline = true,
+        nvimtree = true,
+        telescope = true,
+        lualine = true,
+    },
+})
+vim.cmd("colorscheme catppuccin")
 
 
 
--- Nvim-tree config
+-- Global statusline (fixes the offset problem)
+vim.opt.laststatus = 3
+
+-- Transparent bg
+vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+vim.cmd("hi SignColumn guibg=NONE ctermbg=NONE")
+
+-- NvimTree setup
 require("nvim-tree").setup({
-  view = { side = "left", width = 30 },
-  renderer = { 
-    icons = { show = { git = true, folder = true, file = true } } 
+  hijack_cursor = true,
+  respect_buf_cwd = true,
+  view = {
+    side = "left",
+    width = 30,
+    preserve_window_proportions = true,
+  },
+  renderer = {
+    root_folder_label = false,
+    highlight_opened_files = "icon",
+    indent_markers = {
+      enable = true,
+    },
   },
   update_focused_file = {
     enable = true,        -- follow the currently opened file
@@ -49,7 +65,6 @@ require("nvim-tree").setup({
     ignore_list = {},     -- you can ignore certain files/directories
   },
 })
-
 
 
 -- Bufferline config
@@ -61,7 +76,7 @@ require("bufferline").setup({
     separator_style = "thin",       -- tab separators
     diagnostics = "nvim_lsp",        -- optional LSP diagnostics in tabs
     style = 'default',
-
+    transparent = true,
      -- This aligns bufferline with NvimTree
     offsets = {
       {
@@ -70,27 +85,27 @@ require("bufferline").setup({
         highlight = "Directory",
         text_align = "left", -- can be "center" or "right"
       }
-    },
+    }, 
   },
 })
 
 
-local hl_groups = {
-  "BufferLineBackground",
-  "BufferLineFill",
-  "BufferLineTab",
-  "BufferLineTabActive",
-  "BufferLineTabClose",
-  "BufferLineSeparator",
-  "BufferLineSeparatorVisible",
-  "BufferLineSeparatorSelected",
-  "BufferLineIndicatorSelected",
-}
-
-for _, group in ipairs(hl_groups) do
-  vim.api.nvim_set_hl(0, group, { bg = "NONE" })
-end
-
+-- Transparent 
+vim.cmd([[
+  hi Normal guibg=NONE ctermbg=NONE
+  hi NonText guibg=NONE ctermbg=NONE
+  hi NvimTreeNormal guibg=NONE ctermbg=NONE
+  hi NvimTreeVertSplit guibg=NONE ctermbg=NONE
+  hi NormalNC guibg=NONE
+  hi NormalFloat guibg=NONE ctermbg=NONE
+  hi VertSplit guibg=NONE
+  hi TelescopeNormal guibg=NONE ctermbg=NONE
+  hi TelescopeBorder guibg=NONE ctermbg=NONE
+  hi TelescopePromptNormal guibg=NONE
+  hi StatusLine guibg=NONE ctermbg=NONE
+  hi StatusLineNC guibg=NONE ctermbg=NONE
+  hi BufferLineOffset guibg=NONE ctermbg=NONE
+]])
 
 
 -- Telescope config and keymaps
@@ -104,6 +119,7 @@ vim.keymap.set("n", "<leader>fg", builtin.live_grep, { noremap = true, silent = 
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { noremap = true, silent = true })
 -- Search help tags
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { noremap = true, silent = true })
+
 
 
 -- GitSigns config
@@ -127,4 +143,7 @@ end)
 vim.keymap.set("n", "<leader>gp", function()
   require("gitsigns").preview_hunk()
 end)
+
+
+
 
