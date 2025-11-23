@@ -22,15 +22,15 @@ local mason_lspconfig = {
 
     -- ensure LSP servers are installed
     mlc.setup({
-      ensure_installed = { "pyright", "tsserver", "html", "cssls", "lua_ls" },
+      ensure_installed = { "lua_ls" },
     })
 
     -- safe LSP setup
     pcall(function()
-      vim.lsp.config.pyright.setup({})
-      vim.lsp.config.tsserver.setup({})
-      vim.lsp.config.html.setup({})
-      vim.lsp.config.cssls.setup({})
+      -- vim.lsp.config.pyright.setup({})
+      -- vim.lsp.config.tsserver.setup({})
+      -- vim.lsp.config.html.setup({})
+      -- vim.lsp.config.cssls.setup({})
       vim.lsp.config.lua_ls.setup({
         settings = {
           Lua = {
