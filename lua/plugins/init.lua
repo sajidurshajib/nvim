@@ -2,7 +2,7 @@ require("lazy").setup({
   -- Theme
   { "catppuccin/nvim", name = "catppuccin", priority = 1000},
 
- -- Optional icons
+  -- Optional icons
   { "kyazdani42/nvim-web-devicons" },
 
   -- File explorer (left sidebar like VS Code)
@@ -18,6 +18,9 @@ require("lazy").setup({
   -- GitSigns
   { "lewis6991/gitsigns.nvim" },
 
+
+  -- Mason
+  unpack(require("plugins.mason"))
 })
 
 
