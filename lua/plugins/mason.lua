@@ -22,12 +22,23 @@ local mason_lspconfig = {
 
     -- ensure LSP servers are installed
     mlc.setup({
-      ensure_installed = { "lua_ls" },
+      ensure_installed = { "pyright", "lua_ls" },
     })
 
     -- safe LSP setup
     pcall(function()
-      -- vim.lsp.config.pyright.setup({})
+      vim.lsp.config.pyright.setup({
+        settings = {
+          python = {
+            pythonPath = vim.fn.getcwd() .. "/.venv/bin/python", -- detect .venv automatically
+            analysis = {
+              typeCheckingMode = "basic",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      })
       -- vim.lsp.config.tsserver.setup({})
       -- vim.lsp.config.html.setup({})
       -- vim.lsp.config.cssls.setup({})
