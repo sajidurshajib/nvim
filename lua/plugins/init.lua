@@ -20,7 +20,10 @@ require("lazy").setup({
 
 
   -- Mason
-  unpack(require("plugins.mason"))
+  unpack(require("plugins.mason")),
+
+  -- TreeSitter
+  unpack(require("plugins.treesitter")),
 })
 
 
