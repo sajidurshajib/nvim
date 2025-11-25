@@ -55,8 +55,10 @@ local treesitter = {
 
 -- Rainbow parentheses plugin
 local rainbow = {
-  "p00f/nvim-ts-rainbow",
-  after = "nvim-treesitter",
+  "HiPhish/rainbow-delimiters.nvim",
+  config = function()
+    -- default settings work out of the box
+  end,
 }
 
 return { treesitter, rainbow }
