@@ -14,10 +14,12 @@ require("lazy").setup({
   -- Telescope fuzzy finder
   -- Telescope needs ripgrep installed and Neovim version above 0.10.1
   { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+  
+  -- Banner/Dashboard 
+  unpack(require("plugins.dashboard")),
 
   -- GitSigns
   { "lewis6991/gitsigns.nvim" },
-
 
   -- Mason
   unpack(require("plugins.mason")),
