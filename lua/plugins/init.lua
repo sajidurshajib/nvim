@@ -21,12 +21,13 @@ require("lazy").setup({
   -- GitSigns
   { "lewis6991/gitsigns.nvim" },
 
-  -- Mason
-  unpack(require("plugins.mason")),
-
   -- TreeSitter
   unpack(require("plugins.treesitter")),
-})
+},
+  {
+    git = { timeout = 600, }
+  }
+)
 
 
 require("plugins.theme")
